@@ -1,36 +1,24 @@
 <?php
-session_start(); // Start the session to access user data
+session_start(); 
 
-// Check if user is logged in
+
 if (!isset($_SESSION['user_id'])) {
-    // Redirect to login if not logged in
+
     header("Location: ../login.php");
     exit();
 }
 
 $studentName = $_SESSION['student_name'];
 
-// Database connection
-$host = 'localhost'; // Database host
-$username = 'root'; // Database username
-$password = ''; // Database password
-$dbname = 'lms'; // Database name
+include("../php/config.php");
 
-// Create a connection
-$conn = new mysqli($host, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Fetch courses and teacher information
 $sql = "SELECT c.id as course_id, c.course_name, t.teacher_name 
         FROM teachers t
         INNER JOIN courses c ON t.course_id = c.id";
 $result = $conn->query($sql);
 
-// Check if there are any courses
+
 $courses = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -53,7 +41,7 @@ $conn->close();
     <link rel="stylesheet" href="../styles/home.css">
 </head>
 <body>
-    <!-- Navbar -->
+
     <nav class="navbar">
         <div class="navbar-content">
         <div class="logo">Welcome <?php echo htmlspecialchars($studentName); ?></div>
@@ -69,7 +57,7 @@ $conn->close();
         </div>
     </nav>
 
-    <!-- Hero Section -->
+
     <section id="home" class="hero">
         <div class="hero-content">
             <div class="hero-text">
@@ -86,7 +74,7 @@ $conn->close();
         </div>
     </section>
 
-<!-- Courses Section -->
+
 <section id="courses" class="section">
         <h2 class="section-title">Breakthrough Courses</h2>
         <div class="courses-grid">
@@ -106,7 +94,7 @@ $conn->close();
 
 
 
-    <!-- Services Section -->
+
     <section id="services" class="section">
         <h2 class="section-title">Our Advanced Services</h2>
         <div class="services-grid">
@@ -141,7 +129,6 @@ $conn->close();
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="section contact">
         <h2 class="section-title">Connect With Us</h2>
         <form class="contact-form">
@@ -152,7 +139,7 @@ $conn->close();
         </form>
     </section>
 
-    <!-- Footer -->
+
     <footer class="footer">
         <p>&copy; 2024 LearnHub. All Rights Reserved.</p>
     </footer>

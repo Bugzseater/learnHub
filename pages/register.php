@@ -1,19 +1,7 @@
 <?php
-// Connection parameters (update these with your actual database details)
-$host = 'localhost'; // Database host
-$username = 'root'; // Database username
-$password = ''; // Database password
-$dbname = 'lms'; // Database name
+include("../php/config.php");
 
-// Create a connection
-$conn = new mysqli($host, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get form data
     $studentName = $_POST['student_name'];
@@ -22,13 +10,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password for security
 
-    // Prepare the SQL query to insert data
+
     $sql = "INSERT INTO students (student_name, dob, district, email, password)
             VALUES ('$studentName', '$dob', '$district', '$email', '$password')";
 
-    // Execute the query
+   
     if ($conn->query($sql) === TRUE) {
-        // Show success alert and redirect to index.php
+
         echo "<script>
                 alert('Registration Successful!');
                 window.location.href = '../index.php';
@@ -38,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Close the database connection
+
 $conn->close();
 ?>
 

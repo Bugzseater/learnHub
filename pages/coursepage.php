@@ -1,38 +1,27 @@
 <?php
-session_start(); // Start the session to access user data
+session_start(); 
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    // Redirect to login if not logged in
+   
     header("Location: ../login.php");
     exit();
 }
 
 $studentName = $_SESSION['student_name'];
 
-// Get the course ID from the URL
+
 $course_id = isset($_GET['course_id']) ? $_GET['course_id'] : null;
 if (!$course_id) {
-    // Redirect if no course ID is provided
+
     header("Location: ../index.php");
     exit();
 }
 
-// Database connection
-$host = 'localhost'; // Database host
-$username = 'root'; // Database username
-$password = ''; // Database password
-$dbname = 'lms'; // Database name
 
-// Create a connection
-$conn = new mysqli($host, $username, $password, $dbname);
+include("../php/config.php");
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
-// Fetch course and teacher information
 $sql = "SELECT c.course_name, t.teacher_name 
         FROM teachers t
         INNER JOIN courses c ON t.course_id = c.id
@@ -43,7 +32,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $course = $result->fetch_assoc();
 
-// Fetch lecture notes for the course
+
 $sql_notes = "SELECT * 
               FROM lecture_notes 
               WHERE course_id = ?";
@@ -67,7 +56,7 @@ $conn->close();
 </head>
 <body>
 
-    <!-- Navbar -->
+
     <nav class="navbar">
         <div class="navbar-content">
         <div class="logo">Welcome <?php echo htmlspecialchars($studentName); ?></div>
@@ -80,7 +69,7 @@ $conn->close();
         </div>
     </nav>
 
-    <!-- Course Notes Section -->
+
     <section id="notes" class="section">
         <h2 class="section-title">All Notes</h2>
         <div class="notes-grid">

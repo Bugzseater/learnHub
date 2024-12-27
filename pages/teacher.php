@@ -1,19 +1,9 @@
 <?php
 session_start();
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "lms";
+include("../php/config.php");
 
-$conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
     $action = $_POST['action'];
 
@@ -55,12 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
         }
     }
 
-    // Redirect to prevent form resubmission
+
     header("Location: teacher.php");
     exit();
 }
 
-// Fetch teachers and courses for display
+
 $teachers_sql = "SELECT teachers.*, courses.course_name FROM teachers 
                  LEFT JOIN courses ON teachers.course_id = courses.id";
 $teachers = $conn->query($teachers_sql);
@@ -81,7 +71,7 @@ $courses = $conn->query($courses_sql);
 </head>
 <body>
     <?php
-    // Display session message using JavaScript alert
+
     if (isset($_SESSION['message'])) {
         echo "<script>alert('" . $_SESSION['message'] . "');</script>";
         unset($_SESSION['message']); // Clear the message after displaying
@@ -90,7 +80,7 @@ $courses = $conn->query($courses_sql);
 
     <div class="dashboard-container">
 
-        <!-- Side Navigation Bar -->
+
         <nav class="sidebar">
             <ul>
                 <li><a href="./dashboard.php">Dashboard</a></li>
@@ -101,7 +91,7 @@ $courses = $conn->query($courses_sql);
             </ul>
         </nav>
 
-        <!-- Main Dashboard Content -->
+
         <div class="main-content">
             <header>
                 <h1>Teachers</h1>
@@ -111,7 +101,7 @@ $courses = $conn->query($courses_sql);
                 <button onclick="openModal('add')">Add Teacher</button>
             </div>
 
-            <!-- Teachers Table -->
+  
             <div class="table-sections">
                 <h2>Teachers</h2>
                 <table>
@@ -153,7 +143,7 @@ $courses = $conn->query($courses_sql);
         </div>
     </div>
 
-    <!-- Modal -->
+
     <div id="courseModal" style="display:none; position:fixed; top:50%; left:50%; height:500px; transform:translate(-50%, -50%); background:white; padding:20px; box-shadow:0 4px 8px rgba(0, 0, 0, 0.1);">
         <form method="POST" action="teacher.php">
             <input type="hidden" name="action" id="formAction">

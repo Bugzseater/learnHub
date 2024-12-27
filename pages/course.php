@@ -1,19 +1,10 @@
 <?php
 session_start();
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "lms";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+include("../php/config.php");
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
     $action = $_POST['action'];
 
@@ -53,12 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
         }
     }
 
-    // Redirect to prevent form resubmission
+   
     header("Location: course.php");
     exit();
 }
 
-// Fetch courses for display
+
 $sql = "SELECT * FROM courses";
 $result = $conn->query($sql);
 ?>
@@ -76,7 +67,7 @@ $result = $conn->query($sql);
 </head>
 <body>
     <?php
-    // Display session message using JavaScript alert
+
     if (isset($_SESSION['message'])) {
         echo "<script>alert('" . $_SESSION['message'] . "');</script>";
         unset($_SESSION['message']); // Clear the message after displaying
@@ -85,7 +76,6 @@ $result = $conn->query($sql);
 
     <div class="dashboard-container">
 
-        <!-- Side Navigation Bar -->
         <nav class="sidebar">
             <ul>
                 <li><a href="./dashboard.php">Dashboard</a></li>
@@ -96,7 +86,7 @@ $result = $conn->query($sql);
             </ul>
         </nav>
 
-        <!-- Main Dashboard Content -->
+
         <div class="main-content">
             <header>
                 <h1>Courses</h1>
@@ -106,9 +96,9 @@ $result = $conn->query($sql);
                 <button onclick="openModal('add')">Add Course</button>
             </div>
 
-            <!-- Tables for Demo Data -->
+
             <div class="table-sections">
-                <!-- Courses Table -->
+
                 <div class="table-section">
                     <h2>Courses</h2>
                     <table>
@@ -149,7 +139,7 @@ $result = $conn->query($sql);
         </div>
     </div>
 
-    <!-- Modal -->
+ 
     <div id="courseModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; box-shadow:0 4px 8px rgba(0, 0, 0, 0.1);">
         <form method="POST" action="course.php">
             <input type="hidden" name="action" id="formAction">

@@ -1,44 +1,44 @@
 <?php
 session_start(); // Start the session to store login info
 
-// Database connection
+
 $host = 'localhost'; // Database host
 $username = 'root'; // Database username
 $password = ''; // Database password
 $dbname = 'lms'; // Database name
 
-// Create a connection
+
 $conn = new mysqli($host, $username, $password, $dbname);
 
-// Check connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if form is submitted
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $studentNo = $_POST['student_no'];
     $userPassword = $_POST['password'];
 
     if ($studentNo == "Admin" && $userPassword == "admin123") {
-        // Redirect admin to the dashboard
+
         header("Location: ./pages/dashboard.php");
         exit();
     }
 
-    // Fetch user data based on student number (email or student number)
+
     $sql = "SELECT id, student_name, email, password FROM students WHERE email = '$studentNo' OR student_name = '$studentNo'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        // Verify password using password_verify
+
         if (password_verify($userPassword, $row['password'])) {
             // Store user information in session
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['student_name'] = $row['student_name']; // Store student name
             $_SESSION['email'] = $row['email'];
-            // Redirect to home.php
+ 
             header("Location: ./pages/home.php");
             exit();
         } else {
@@ -73,7 +73,7 @@ $conn->close();
             </div>
 
             <div class="right">
-                <!-- Display error message if any -->
+     
                 <?php if (isset($error)) { echo "<p style='color: red;'>$error</p>"; } ?>
 
                 <form action="index.php" method="POST">

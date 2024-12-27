@@ -1,19 +1,10 @@
 <?php
 session_start();
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "lms";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+include("../php/config.php");
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
-// Fetch counts for teachers, courses, and students
 $teacher_count_query = "SELECT COUNT(*) AS teacher_count FROM teachers";
 $teacher_count_result = $conn->query($teacher_count_query);
 $teacher_count = $teacher_count_result->fetch_assoc()['teacher_count'];
@@ -26,7 +17,7 @@ $student_count_query = "SELECT COUNT(*) AS student_count FROM students";
 $student_count_result = $conn->query($student_count_query);
 $student_count = $student_count_result->fetch_assoc()['student_count'];
 
-// Fetch students for the table
+
 $sql = "SELECT * FROM students";
 $result = $conn->query($sql);
 ?>
@@ -70,7 +61,6 @@ $result = $conn->query($sql);
 
 <div class="dashboard-container">
 
-    <!-- Side Navigation Bar -->
     <nav class="sidebar">
         <ul>
             <li><a href="./dashboard.php">Dashboard</a></li>
@@ -81,7 +71,7 @@ $result = $conn->query($sql);
         </ul>
     </nav>
 
-    <!-- Main Dashboard Content -->
+
     <div class="main-content">
         <header>
             <h1>Dashboard</h1>
@@ -105,9 +95,9 @@ $result = $conn->query($sql);
             </div>
         </div>
 
-        <!-- Tables for Demo Data -->
+
         <div class="table-sections">
-            <!-- Students Table -->
+
             <div class="table-section">
                 <h2>Students</h2>
                 <table>
