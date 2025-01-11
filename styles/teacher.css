@@ -1,61 +1,53 @@
-
-        #courseModal input[type="text"],
-    #courseModal input[type="email"],
-    #courseModal select {
-        width: 90%;
-        padding: 12px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-        background-color: #f9f9f9;
-        color: #333;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    /* Focus Styling for Inputs */
-    #courseModal input[type="text"]:focus,
-    #courseModal input[type="email"]:focus,
-    #courseModal select:focus {
-        border-color: #3498db;
-        box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
-        outline: none;
-    }
-
-    /* Button Styling */
-    #courseModal button[type="submit"],
-    #courseModal button[type="button"] {
-        width: 50%;
-        padding: 12px;
-        margin: 10px 0;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    /* Submit Button (Save) */
-    #courseModal button[type="submit"] {
-        background-color: #3498db;
-        color: white;
-    }
-
-    #courseModal button[type="submit"]:hover {
-        background-color: #2980b9;
-    }
-
-    /* Cancel Button */
-    #courseModal button[type="button"] {
-        background-color: #e74c3c;
-        color: white;
-    }
-
-    #courseModal button[type="button"]:hover {
-        background-color: #c0392b;
-    }
-
-    /* Modal Close Button (Cancel) */
-    #courseModal button[type="button"] {
-        width: 50%;
-    }
+#courseModal input[type="text"],
+#courseModal input[type="email"],
+#courseModal select {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+/* Focus Styling for Inputs */
+#courseModal input[type="text"]:focus,
+#courseModal input[type="email"]:focus,
+#courseModal select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
+/* Button Styling */
+#courseModal button[type="submit"],
+#courseModal button[type="button"] {
+    width: 50%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+/* Submit Button (Save) */
+#courseModal button[type="submit"] {
+    background-color: #3498db;
+    color: white;
+}
+#courseModal button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+/* Cancel Button */
+#courseModal button[type="button"] {
+    background-color: #e74c3c;
+    color: white;
+}
+#courseModal button[type="button"]:hover {
+    background-color: #c0392b;
+}
+/* Modal Close Button (Cancel) */
+#courseModal button[type="button"] {
+    width: 50%;
+}

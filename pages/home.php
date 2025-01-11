@@ -1,35 +1,23 @@
 <?php
-session_start(); 
-
-
+session_start();
 if (!isset($_SESSION['user_id'])) {
-
     header("Location: ../login.php");
     exit();
 }
-
 $studentName = $_SESSION['student_name'];
-
 include("../php/config.php");
-
-
 $sql = "SELECT c.id as course_id, c.course_name, t.teacher_name 
         FROM teachers t
         INNER JOIN courses c ON t.course_id = c.id";
 $result = $conn->query($sql);
-
-
 $courses = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $courses[] = $row;
     }
 }
-
 $conn->close();
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +29,6 @@ $conn->close();
     <link rel="stylesheet" href="../styles/home.css">
 </head>
 <body>
-
     <nav class="navbar">
         <div class="navbar-content">
         <div class="logo">Welcome <?php echo htmlspecialchars($studentName); ?></div>
@@ -53,11 +40,8 @@ $conn->close();
                 <a href="#contact">Contact</a>
                 <a href="../index.php">LOGOUT</a>
             </div>
-            
         </div>
     </nav>
-
-
     <section id="home" class="hero">
         <div class="hero-content">
             <div class="hero-text">
@@ -73,9 +57,7 @@ $conn->close();
             </div>
         </div>
     </section>
-
-
-<section id="courses" class="section">
+    <section id="courses" class="section">
         <h2 class="section-title">Breakthrough Courses</h2>
         <div class="courses-grid">
             <?php foreach ($courses as $course): ?>
@@ -91,10 +73,6 @@ $conn->close();
             <?php endforeach; ?>
         </div>
     </section>
-
-
-
-
     <section id="services" class="section">
         <h2 class="section-title">Our Advanced Services</h2>
         <div class="services-grid">
@@ -128,7 +106,6 @@ $conn->close();
             </div>
         </div>
     </section>
-
     <section id="contact" class="section contact">
         <h2 class="section-title">Connect With Us</h2>
         <form class="contact-form">
@@ -138,8 +115,6 @@ $conn->close();
             <button type="submit" class="submit-btn">Send Message</button>
         </form>
     </section>
-
-
     <footer class="footer">
         <p>&copy; 2024 LearnHub. All Rights Reserved.</p>
     </footer>

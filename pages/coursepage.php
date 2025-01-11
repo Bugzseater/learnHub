@@ -1,27 +1,16 @@
 <?php
-session_start(); 
-
-// Check if user is logged in
+session_start();
 if (!isset($_SESSION['user_id'])) {
-   
     header("Location: ../login.php");
     exit();
 }
-
 $studentName = $_SESSION['student_name'];
-
-
 $course_id = isset($_GET['course_id']) ? $_GET['course_id'] : null;
 if (!$course_id) {
-
     header("Location: ../index.php");
     exit();
 }
-
-
 include("../php/config.php");
-
-
 $sql = "SELECT c.course_name, t.teacher_name 
         FROM teachers t
         INNER JOIN courses c ON t.course_id = c.id
@@ -31,8 +20,6 @@ $stmt->bind_param("i", $course_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $course = $result->fetch_assoc();
-
-
 $sql_notes = "SELECT * 
               FROM lecture_notes 
               WHERE course_id = ?";
@@ -40,10 +27,8 @@ $stmt_notes = $conn->prepare($sql_notes);
 $stmt_notes->bind_param("i", $course_id);
 $stmt_notes->execute();
 $result_notes = $stmt_notes->get_result();
-
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,8 +40,6 @@ $conn->close();
     <link rel="stylesheet" href="../styles/course.css">
 </head>
 <body>
-
-
     <nav class="navbar">
         <div class="navbar-content">
         <div class="logo">Welcome <?php echo htmlspecialchars($studentName); ?></div>
@@ -65,11 +48,8 @@ $conn->close();
                 <a href="./home.php">Home</a>
                 <a href="../index.php">LOGOUT</a>
             </div>
-            
         </div>
     </nav>
-
-
     <section id="notes" class="section">
         <h2 class="section-title">All Notes</h2>
         <div class="notes-grid">

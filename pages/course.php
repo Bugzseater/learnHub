@@ -1,21 +1,14 @@
 <?php
 session_start();
-
-
 include("../php/config.php");
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
     $action = $_POST['action'];
-
     if ($action === "add") {
         $course_name = $_POST['course_name'];
         $course_description = $_POST['course_description'];
         $course_duration = $_POST['course_duration'];
-
         $sql = "INSERT INTO courses (course_name, course_description, course_duration) 
                 VALUES ('$course_name', '$course_description', '$course_duration')";
-
         if ($conn->query($sql) === TRUE) {
             $_SESSION['message'] = "New course added successfully.";
         } else {
@@ -23,7 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
         }
     } elseif ($action === "delete" && isset($_POST['id'])) {
         $id = $_POST['id'];
-
         $sql = "DELETE FROM courses WHERE id='$id'";
         if ($conn->query($sql) === TRUE) {
             $_SESSION['message'] = "Course deleted successfully.";
@@ -35,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
         $course_name = $_POST['course_name'];
         $course_description = $_POST['course_description'];
         $course_duration = $_POST['course_duration'];
-
         $sql = "UPDATE courses SET course_name='$course_name', course_description='$course_description', course_duration='$course_duration' WHERE id='$id'";
         if ($conn->query($sql) === TRUE) {
             $_SESSION['message'] = "Course updated successfully.";
@@ -43,17 +34,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
             $_SESSION['message'] = "Error updating course: " . $conn->error;
         }
     }
-
-   
     header("Location: course.php");
     exit();
 }
-
-
 $sql = "SELECT * FROM courses";
 $result = $conn->query($sql);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,20 +48,15 @@ $result = $conn->query($sql);
     <title>Courses</title>
     <link rel="stylesheet" href="../styles/dashboard.css">
     <link rel="stylesheet" href="../styles/courseadmin.css">
-    
-
 </head>
 <body>
     <?php
-
     if (isset($_SESSION['message'])) {
         echo "<script>alert('" . $_SESSION['message'] . "');</script>";
         unset($_SESSION['message']); // Clear the message after displaying
     }
     ?>
-
     <div class="dashboard-container">
-
         <nav class="sidebar">
             <ul>
                 <li><a href="./dashboard.php">Dashboard</a></li>
@@ -85,20 +66,14 @@ $result = $conn->query($sql);
                 <li><a href="../index.php">Logout</a></li>
             </ul>
         </nav>
-
-
         <div class="main-content">
             <header>
                 <h1>Courses</h1>
             </header>
-
             <div class="form-sections">
                 <button onclick="openModal('add')">Add Course</button>
             </div>
-
-
             <div class="table-sections">
-
                 <div class="table-section">
                     <h2>Courses</h2>
                     <table>
@@ -138,8 +113,6 @@ $result = $conn->query($sql);
             </div>
         </div>
     </div>
-
- 
     <div id="courseModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; box-shadow:0 4px 8px rgba(0, 0, 0, 0.1);">
         <form method="POST" action="course.php">
             <input type="hidden" name="action" id="formAction">
@@ -151,13 +124,10 @@ $result = $conn->query($sql);
             <button type="button" onclick="closeModal()">Cancel</button>
         </form>
     </div>
-
-
     <script>
         function openModal(action, course = null) {
             const modal = document.getElementById('courseModal');
             const formAction = document.getElementById('formAction');
-
             if (action === 'update' && course) {
                 document.getElementById('courseId').value = course.id;
                 document.getElementById('courseName').value = course.name;
@@ -169,15 +139,12 @@ $result = $conn->query($sql);
                 document.getElementById('courseDescription').value = "";
                 document.getElementById('courseDuration').value = "";
             }
-
             formAction.value = action;
             modal.style.display = 'block';
         }
-
         function closeModal() {
             document.getElementById('courseModal').style.display = 'none';
         }
     </script>
-    
 </body>
 </html>

@@ -1,54 +1,37 @@
 <?php
 session_start();
-
 include("../php/config.php");
-
 $teachers_sql = "SELECT * FROM teachers";
 $teachers = $conn->query($teachers_sql);
-
 $courses_sql = "SELECT * FROM courses";
 $courses = $conn->query($courses_sql);
-
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-
     $teacher_id = $_POST['teacher_id'];
     $course_id = $_POST['course_id'];
     $upload_date = $_POST['upload_date'];
     $note_file = $_FILES['note_file'];
-
-
     if ($note_file['error'] == UPLOAD_ERR_OK) {
         $target_dir = "../uploads/"; // Directory to store uploaded files
         $file_name = basename($note_file['name']);
         $file_name = preg_replace("/[^a-zA-Z0-9\-_\.]/", "_", $file_name);  // Sanitize file name
         $target_file = $target_dir . $file_name;
-
         $allowed_types = ['pdf', 'doc', 'docx', 'ppt', 'txt'];
         $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
-
         if (in_array(strtolower($file_type), $allowed_types)) {
- 
             if (move_uploaded_file($note_file['tmp_name'], $target_file)) {
-
                 $teacher_check_sql = "SELECT * FROM teachers WHERE id = ?";
                 $stmt = $conn->prepare($teacher_check_sql);
                 $stmt->bind_param("i", $teacher_id);
                 $stmt->execute();
                 $result = $stmt->get_result();
-
                 if ($result->num_rows > 0) {
-
                     $stmt = $conn->prepare("INSERT INTO lecture_notes (teacher_id, course_id, upload_date, note_file) VALUES (?, ?, ?, ?)");
                     $stmt->bind_param("iiss", $teacher_id, $course_id, $upload_date, $target_file);
-
                     if ($stmt->execute()) {
                         echo "<script>alert('Note uploaded successfully!');</script>";
                     } else {
                         echo "<script>alert('Error: " . $stmt->error . "');</script>";
                     }
-
                     $stmt->close();
                 } else {
                     echo "<script>alert('Error: Teacher with ID $teacher_id does not exist.');</script>";
@@ -63,10 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<script>alert('Error uploading file.');</script>";
     }
 }
-
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,10 +55,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lecture Notes</title>
     <link rel="stylesheet" href="../styles/dashboard.css">
-
     <style>
-
-
     form {
         background-color: white;
         border-radius: 8px;
@@ -89,8 +67,6 @@ $conn->close();
         max-width: 500px;
         margin: 0 auto;
     }
-
-
     input[type="text"],
     input[type="email"],
     select,
@@ -106,8 +82,6 @@ $conn->close();
         color: #333;
         transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
-
-
     input[type="text"]:focus,
     input[type="email"]:focus,
     select:focus,
@@ -117,8 +91,6 @@ $conn->close();
         box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
         outline: none;
     }
-
-
     button[type="submit"],
     button[type="reset"] {
         width: 48%;
@@ -130,62 +102,45 @@ $conn->close();
         transition: background-color 0.3s ease;
         margin: 10px 0;
     }
-
-
     button[type="submit"] {
         background-color: #3498db;
         color: white;
     }
-
     button[type="submit"]:hover {
         background-color: #2980b9;
     }
-
-
     button[type="reset"] {
         background-color: #e74c3c;
         color: white;
     }
-
     button[type="reset"]:hover {
         background-color: #c0392b;
     }
-
-
     @media (max-width: 768px) {
         .dashboard-container {
             flex-direction: column;
         }
-
         .main-content {
             margin-left: 0;
             padding: 15px;
         }
-
         form {
             width: 100%;
             margin: 0;
         }
-
-
         .sidebar {
             width: 100%;
             position: relative;
             padding: 10px;
         }
-
         .sidebar ul li {
             font-size: 16px;
         }
     }
-</style>
-
+    </style>
 </head>
 <body>
-
     <div class="dashboard-container">
-
-
         <nav class="sidebar">
             <ul>
                 <li><a href="./dashboard.php">Dashboard</a></li>
@@ -195,13 +150,10 @@ $conn->close();
                 <li><a href="../index.php">Logout</a></li>
             </ul>
         </nav>
-
-
         <div class="main-content">
             <header>
                 <h1>Lecture Notes</h1>
             </header>
-
             <form method="POST" action="note.php" enctype="multipart/form-data">
                 <select name="teacher_id" id="teacherName" required>
                     <option value="">-- Select a Teacher --</option>
@@ -226,6 +178,5 @@ $conn->close();
             </form>
         </div>
     </div>
-
 </body>
 </html>

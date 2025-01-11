@@ -1,23 +1,15 @@
 <?php
 session_start();
-
-
 include("../php/config.php");
-
-
 $teacher_count_query = "SELECT COUNT(*) AS teacher_count FROM teachers";
 $teacher_count_result = $conn->query($teacher_count_query);
 $teacher_count = $teacher_count_result->fetch_assoc()['teacher_count'];
-
 $course_count_query = "SELECT COUNT(*) AS course_count FROM courses";
 $course_count_result = $conn->query($course_count_query);
 $course_count = $course_count_result->fetch_assoc()['course_count'];
-
 $student_count_query = "SELECT COUNT(*) AS student_count FROM students";
 $student_count_result = $conn->query($student_count_query);
 $student_count = $student_count_result->fetch_assoc()['student_count'];
-
-
 $sql = "SELECT * FROM students";
 $result = $conn->query($sql);
 ?>
@@ -35,7 +27,6 @@ $result = $conn->query($sql);
             gap: 30px;
             margin-bottom: 20px;
         }
-
         .card {
             background-color: #2f2f2f;
             color: white;
@@ -45,12 +36,10 @@ $result = $conn->query($sql);
             width: 200px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
         .card h1 {
             font-size: 16px;
             margin-bottom: 10px;
         }
-
         .card h2 {
             font-size: 24px;
             font-weight: bold;
@@ -58,9 +47,7 @@ $result = $conn->query($sql);
     </style>
 </head>
 <body>
-
 <div class="dashboard-container">
-
     <nav class="sidebar">
         <ul>
             <li><a href="./dashboard.php">Dashboard</a></li>
@@ -70,34 +57,25 @@ $result = $conn->query($sql);
             <li><a href="../index.php">Logout</a></li>
         </ul>
     </nav>
-
-
     <div class="main-content">
         <header>
             <h1>Dashboard</h1>
         </header>
-
-        <!-- Cards Section -->
         <div class="cards">
             <div class="card">
                 <h1>No of Teachers</h1>
                 <h2><?php echo $teacher_count; ?></h2>
             </div>
-
             <div class="card">
                 <h1>No of Courses</h1>
                 <h2><?php echo $course_count; ?></h2>
             </div>
-
             <div class="card">
                 <h1>No of Students</h1>
                 <h2><?php echo $student_count; ?></h2>
             </div>
         </div>
-
-
         <div class="table-sections">
-
             <div class="table-section">
                 <h2>Students</h2>
                 <table>
@@ -130,6 +108,5 @@ $result = $conn->query($sql);
         </div>
     </div>
 </div>
-
 </body>
 </html>
