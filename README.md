@@ -32,4 +32,4 @@ A Learning Management System (LMS) built using HTML, CSS, JavaScript, and PHP. T
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/learning-management-system.git
+   git clone https://github.com/Bugzseater/learnHub.git
